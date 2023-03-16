@@ -13,6 +13,8 @@ def get_dataset_polarities(texts):
     return [get_text_sentiment(text) for text in texts ]
 
 def predict_dataset_labels(texts):
+    """ Attribute a binary label to input texts, based 
+        on TextBlob polarities """
 
     return [polarity_to_label(get_text_sentiment(text)) for text in texts ]
 
