@@ -1,22 +1,45 @@
 from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
-def get_text_sentiment(text):
+def tb_sentiment(text):
     """ Returns raw value from TextBlob polarity """
 
     return TextBlob(text).sentiment.polarity
 
+def vader_sentiment_withObject(obj, text):
+    """ Returns raw value from Vader Sentiment polarity.
+     Implies there's a vaderSentiment object """
+    return obj.polarity_scores(text)['compound']
 
-def get_dataset_polarities(texts):
+
+def get_dataset_polarities(texts, model):
     """ Returns polarity for each review, on a list """
 
-    return [get_text_sentiment(text) for text in texts ]
+    # TextBlob
+    if model == 'textBlob':
+        return [tb_sentiment(text) for text in texts ]
+    
+    # Vader Sentiment
+    elif model == 'vaderSentiment':
+        vader_analyzer = SentimentIntensityAnalyzer()
+        return [vader_sentiment_withObject(vader_analyzer, text) for text in texts]
 
-def predict_dataset_labels(texts):
+
+def predict_dataset_labels(texts, model):
     """ Attribute a binary label to input texts, based 
         on TextBlob polarities """
+    
+    # TextBlob
+    if model == 'textBlob':
+        return [polarity_to_label(tb_sentiment(text)) for text in texts]
+    
+    # Vader Sentiment
+    elif model == 'vaderSentiment':
+        vader_analyzer = SentimentIntensityAnalyzer()
+        return [polarity_to_label(vader_sentiment_withObject(vader_analyzer, text)) for text in texts]
 
-    return [polarity_to_label(get_text_sentiment(text)) for text in texts ]
+    
 
 def polarity_to_label(polarity):
     """ Converts polarity into label 
