@@ -1,7 +1,7 @@
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import stanza 
-
+from ..lib import models_tools
 
 def tb_sentiment(text):
     """ Returns raw value from TextBlob polarity """
@@ -40,67 +40,20 @@ def predict_dataset_labels(texts, model):
     
     # TextBlob
     if model == 'textBlob':
-        return [polarity_to_label(tb_sentiment(text)) for text in texts]
+        return [models_tools.polarity_to_label(tb_sentiment(text)) for text in texts]
     
     # Vader Sentiment
     elif model == 'vaderSentiment':
         vader_analyzer = SentimentIntensityAnalyzer()
-        return [polarity_to_label(vader_sentiment_withObject(vader_analyzer, text)) for text in texts]
+        return [models_tools.polarity_to_label(vader_sentiment_withObject(vader_analyzer, text)) for text in texts]
     
     elif model == 'stanza':
         stanza_analyzer = stanza.Pipeline(lang='en', processors='tokenize,sentiment', tokenize_no_ssplit=False)
 
         # Values from stanze ranges from 0 to 2;
         # by subtracting 1, it gets normalized with other models (-1 to 1)
-        return [polarity_to_label(stanza_sentiment(stanza_analyzer, text)-1) for text in texts]
+        return [models_tools.polarity_to_label(stanza_sentiment(stanza_analyzer, text)-1) for text in texts]
 
     else:
         return 0
-
     
-
-def polarity_to_label(polarity):
-    """ Converts polarity into label 
-        If value 0 -> maintains 0 
-    """
-    
-    if polarity > 0:
-        return "pos"
-    
-    else:
-        return "neg"
-    
-
-def label_polarities(polarities):
-    """ Assign a label to each polarity value. 
-        0 keeps 0.
-    """
-
-    return [polarity_to_label(polarity) for polarity in polarities]
-
-def accuracy_score(predicted, ground_truth):
-    """ Returns accuracy of predictions """
-
-    predicted = list(predicted)
-    ground_truth = list(ground_truth)
-
-    # Auxiliar variable to count corrects
-    corrects_counter = 0
-
-    total_elements = len(predicted)
-
-    # Check if both lists have same length
-    if total_elements != len(ground_truth):
-        return -1 
-    
-    # Count correct predictions
-    for i in range(total_elements):
-        if predicted[i] == ground_truth[i]:
-             corrects_counter += 1
-        
-    print(corrects_counter)
-    # Calculus of accuracy
-    accuracy = corrects_counter / total_elements
-    return accuracy
-
-
