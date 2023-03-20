@@ -37,11 +37,18 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     lex = lex.to_dict()
 
     lemmatizer = nltk.stem.WordNetLemmatizer()
+
+    # Store output labels
     predicted_labels = []
 
-    for text in texts:
+    # Remove entities
+    texts_without_entities = remove_entities(texts)
 
+    for text in texts_without_entities:
+
+        # To sum polarity
         text_polarity = 0
+
         for word in text:
 
             # Reduce word to its lemma
