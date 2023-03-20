@@ -40,7 +40,10 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     # Remove entities
     texts_without_entities = preprocessing.remove_entities(texts_without_punctuation)
 
-    for text in texts_without_entities:
+    # Lower tokens
+    lowered_texts = preprocessing.lower_texts(texts_without_entities)
+
+    for text in lowered_texts:
 
         # To sum polarity
         text_polarity = 0

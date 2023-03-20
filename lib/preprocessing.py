@@ -38,3 +38,8 @@ def remove_punctuation(texts):
     #[[token for token in text if token not in string.punctuation] for text in texts ]
 
     return texts_no_punctuation
+
+def lower_texts(texts):
+    """ Lower tokens of all texts """
+
+    return [[token.lower() for token in text] for text in texts]
