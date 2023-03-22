@@ -1,6 +1,7 @@
 import nltk 
 import pandas as pd 
 import string 
+import re
 
 
 def remove_entities(texts):
@@ -28,12 +29,11 @@ def remove_punctuation(texts):
 
     texts_no_punctuation = []
 
-    punctuation = string.punctuation + '...'
     for text in texts: 
 
         # Catch tokens that are not punctuation
         texts_no_punctuation.append(
-            [token for token in text if token not in punctuation]
+            [re.sub(f"[{string.punctuation}][{string.punctuation}]+",'',text)]
         )
             
     #[[token for token in text if token not in string.punctuation] for text in texts ]
