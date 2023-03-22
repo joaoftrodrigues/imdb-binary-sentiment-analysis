@@ -44,3 +44,22 @@ def lower_texts(texts):
     """ Lower tokens of all texts """
 
     return [[token.lower() for token in text] for text in texts]
+
+
+def long_words(texts):
+    """Long Words treatment"""
+
+    for text in texts:
+        for token in text:
+            prev_char = ""
+            count = 1
+            start_index = 0
+            for i in range(len(token)):
+                if token[i] == prev_char:
+                    count += 1
+                    if count == 4:
+                        print(token)
+                else:
+                    prev_char = token[i]
+                    count = 1
+                    start_index = i
