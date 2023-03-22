@@ -33,7 +33,7 @@ def remove_punctuation(texts):
 
         # Catch tokens that are not punctuation
         texts_no_punctuation.append(
-            [re.sub(f"[{string.punctuation}][{string.punctuation}]+",'',text)]
+            [re.sub(f"[{string.punctuation}][{string.punctuation}]+",'',token) for token in text]
         )
             
     #[[token for token in text if token not in string.punctuation] for text in texts ]
