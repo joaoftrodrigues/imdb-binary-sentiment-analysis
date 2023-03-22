@@ -3,7 +3,7 @@ import pandas as pd
 import lexicon_tools
 
 # Read test data
-test_ds = pd.read_csv('/data/imdb_reviews_test.csv')
+test_ds = pd.read_csv('data/imdb_reviews_test.csv')
 
 # Tokenize
 test_ds['tokenize'] = [nltk.word_tokenize(text) for text in test_ds['text']] 
