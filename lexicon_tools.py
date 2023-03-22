@@ -43,6 +43,12 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     # Lower tokens
     lowered_texts = preprocessing.lower_texts(texts_without_entities)
 
+    # Delete numbers
+    deleted_numbers = preprocessing.delete_numbers(lowered_texts)
+
+    # Long Words
+    texts_without_longwords = preprocessing.long_words(deleted_numbers)
+
     for text in lowered_texts:
 
         # To sum polarity
