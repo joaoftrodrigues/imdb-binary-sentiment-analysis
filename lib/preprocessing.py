@@ -46,6 +46,18 @@ def lower_texts(texts):
     return [[token.lower() for token in text] for text in texts]
 
 
+def delete_numbers(texts):
+    """ Delete tokens that represent numbers """
+
+    for text in texts:
+        for token in text:
+            if any(char.isdigit() for char in token):
+                text.remove(token)
+
+    return texts
+
+
+# TODO: Finish Long Words function
 def long_words(texts):
     """Long Words treatment"""
 
