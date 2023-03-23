@@ -44,9 +44,6 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     # Initialize NCR lexicon and transform to use
     lex = ncr_initializer(filepath)
 
-    # Initialize lemmatizer
-    lemmatizer = nltk.stem.WordNetLemmatizer()
-
     # Store output labels
     predicted_labels = []
 
@@ -59,12 +56,9 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
         text_polarity = 0
 
         for word in text:
-
-            # Reduce word to its lemma
-            lemma = lemmatizer.lemmatize(word)
-
+            
             # Get polarity from dictionary
-            word_polarity = lex.get(lemma) 
+            word_polarity = lex.get(word) 
 
             # Add when is not None
             if word_polarity:
