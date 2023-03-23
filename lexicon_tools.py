@@ -1,6 +1,6 @@
 import nltk 
 import pandas as pd
-from lib import models_tools, preprocessing
+from lib import models_tools, preprocessing, spacy_preprocessing
 
     
 def ncr_initializer(filepath):
@@ -21,6 +21,22 @@ def ncr_initializer(filepath):
 
     return lex
 
+def nltk_preprocessing(texts):
+
+    # Remove punctuation
+    texts_without_punctuation = preprocessing.remove_punctuation(texts)
+
+    # Remove entities
+    texts_without_entities = preprocessing.remove_entities(texts_without_punctuation)
+
+    # Delete numbers
+    deleted_numbers = preprocessing.delete_numbers(texts_without_entities)
+
+    # Lower tokens
+    lowered_texts = preprocessing.lower_texts(texts_without_entities)
+
+    return lowered_texts
+
 
 def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     """ Apply labels based on lexicon """
@@ -34,22 +50,10 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     # Store output labels
     predicted_labels = []
 
-    # Remove punctuation
-    texts_without_punctuation = preprocessing.remove_punctuation(texts)
+    # Preprocessed texts, using Spacy
+    preprocessed_texts = spacy_preprocessing.preprocessing(texts)
 
-    # Remove entities
-    texts_without_entities = preprocessing.remove_entities(texts_without_punctuation)
-
-    # Lower tokens
-    lowered_texts = preprocessing.lower_texts(texts_without_entities)
-
-    # Delete numbers
-    deleted_numbers = preprocessing.delete_numbers(lowered_texts)
-
-    # Long Words
-    texts_without_longwords = preprocessing.long_words(deleted_numbers)
-
-    for text in lowered_texts:
+    for text in preprocessed_texts:
 
         # To sum polarity
         text_polarity = 0
