@@ -40,7 +40,9 @@ def preprocessing(texts):
                 continue
 
             # Add lowercase token to list
-            processed_text.append(token.text.lower())
+            processed_text.append(token.lemma_)
         
         # Add tokens to work, from text
         processed_texts.append(processed_text)
+
+    return processed_texts
