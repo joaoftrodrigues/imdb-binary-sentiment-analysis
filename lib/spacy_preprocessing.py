@@ -47,13 +47,10 @@ def preprocessing(texts):
         # List of tokens to work from current text
         processed_text = []
 
-        # Present entities in current text        
-        #entities_found = [str(entity) for entity in text_features.ents]
-
         for token in text_features:
 
-            # Numerals and Punctuation
-            if token.pos in ['NUM', 'PUNCT']:
+            # Numerals
+            if token.pos == 'NUM':
                 continue
 
             # Entities
@@ -93,8 +90,8 @@ def preprocess_and_evaluation_nocorr(texts, filepath='lexicons/NCR-lexicon.csv')
 
         for token in text_features:
 
-            # Numerals and Punctuation
-            if token.pos in ['NUM', 'PUNCT']:
+            # Numerals
+            if token.pos == 'NUM':
                 continue
 
             # Entities
