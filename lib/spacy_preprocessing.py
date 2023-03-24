@@ -87,6 +87,7 @@ def preprocess_and_evaluation_nocorr(texts, filepath='lexicons/NCR-lexicon.csv')
     for text in texts:
         
         text_polarity = 0
+        negation_flag = False
 
         for token in text:
 
@@ -96,13 +97,23 @@ def preprocess_and_evaluation_nocorr(texts, filepath='lexicons/NCR-lexicon.csv')
 
             # Entities
             if token.ent_type:
-                continue       
+                continue
+
+            if negation_flag:
+                if token.dep_ == "cc" or token.dep_ == "punct":
+                    negation_flag = False
+
+            if token.dep_ == "neg":
+                negation_flag = True
 
             # Polarity of word, from dictionary
             word_polarity = lex.get(token.lemma_)
 
             # Add when is not None
             if word_polarity:
+                # Apply negation handling
+                if negation_flag:
+                    word_polarity = -word_polarity
                 text_polarity += word_polarity    
         
         # Add tokens to work, from text
