@@ -81,14 +81,14 @@ def preprocess_and_evaluation_nocorr(texts, filepath='lexicons/NCR-lexicon.csv')
     total = len(texts)
     n_text = 0
 
+    # Pipe of texts
+    texts = nlp.pipe(texts)
+
     for text in texts:
         
-        # Retrieval of information from spacy
-        text_features = nlp(text)
-
         text_polarity = 0
 
-        for token in text_features:
+        for token in text:
 
             # Numerals
             if token.pos == 'NUM':
