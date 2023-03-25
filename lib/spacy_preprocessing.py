@@ -111,18 +111,6 @@ def preprocess_and_evaluation_nocorr(texts, filepath='lexicons/NCR-lexicon.csv')
     return predicted_labels
 
 
-#def polarity_to_label(polarity):
-    """ Converts polarity into label 
-        If value 0 -> maintains 0 
-    """
-    
- #   if polarity > 0:
-  #      return "pos"
-    
-   # else:
-    #    return "neg"
-
-
 def sp_preprocessing(texts):
     """ Preprocessing using spacy """
 
