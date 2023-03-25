@@ -48,8 +48,11 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
     predicted_labels = []
 
     # Preprocessed texts, using Spacy
-    preprocessed_texts = spacy_preprocessing.preprocessing(texts)
+    preprocessed_texts = spacy_preprocessing.sp_preprocessing_lemma(texts)
 
+    total = len(texts)
+    n_text = 1
+    
     for text in preprocessed_texts:
 
         # To sum polarity
@@ -66,5 +69,7 @@ def lexicon_analysis(texts, filepath='lexicons/NCR-lexicon.csv'):
 
         # Add text label to list, based on value
         predicted_labels.append(models_tools.polarity_to_label(text_polarity))
+        print(f"2|{n_text}/{total}")
+        n_text += 1
 
     return predicted_labels
