@@ -1,6 +1,6 @@
 import nltk 
 import pandas as pd
-import lexicon_tools
+import lib.lexicon_tools as lexicon_tools
 from lib import spacy_preprocessing
 
 # Read test data
